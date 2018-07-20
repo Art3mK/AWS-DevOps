@@ -18,7 +18,7 @@ AWS tools:
 ### all-at-once deployment
 
 ```
-                           +------------+
+                          +------------+
       +------------------->   Target   |
       |                   +------------+
 +-----+----+
@@ -78,3 +78,9 @@ deployment stage 2 - update instances kept online in stage 1
 - easy rollback
 - health and performance of entire `green` env can be tested prior to cutover
 - can be fully automated
+
+### AB testing
+
+70%/30% traffic -> Blue/Green
+
+- Route53 weight distribution
