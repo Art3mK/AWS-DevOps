@@ -282,6 +282,33 @@ AWS::CloudFormation::Stack
                 Ref: "WebServerCapacity"
         ```
 
+### Custom resources
+
+CF limitations:
+- not all features of all AWS services are supported
+- can't operator on non AWS resources
+- cloudformation is not a programming language
+- ability to interact with external services as part of stack operations is limited
+
+Custom resource is backed by SNS or Lambda
+- "Type" : "Custom::%ResourceName%"
+- "ServiceToken" : "arn:aws:sns:ap-southeast-2:12345678910:snp" <- SNS topic to put notification to
+    - when a stack is created|updated|deleted a SNS notification is sent to a topic containing the event, and a payloads
+    - with lambda -> lambda function is invoked and passed an event with the same info.
+
+![alt](./images/CF-custom-resources.png)
+
+Respond payload:
+![alt](./images/CF-custom-resource-respond.png)
+- Status: allows CF to complete creation of custom resource (or fail)
+- StackId/RequestId: must match with values in request
+- Physical & Logical ResourceId: physical is uniq for each object, logical - name of object
+- data: provide custom values
+
+![alt](./images/CF-custom-resources-result.png)
+
+
+
 ## Links
 
 - https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-signal.html
