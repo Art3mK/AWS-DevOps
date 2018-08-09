@@ -144,6 +144,47 @@ the layer can represent only existing RDS instances.
 - attach layer to an app, which adds RDS instance's connection information to the app's deploy attributes
 - use info from deploy attributes to connect app to the RDS instance
 
+## Databags/BerkShelf
+
+### BerkShelf
+
+- only one custom cookbook repo for older version (<11.10)
+- 11.10 added BerkShelf -> multiple repos allowed
+- to enable -> enable custom cookbooks, Berksfile in root repo, which contains sources and custom cookbooks
+
+### Databags
+
+- global JSON objects
+- multiple databags, **stack, layer, app, instance** levels
+- accessed via the chef `data_bag_item` and `search` methods
+- databags are constructed with the `custom_json` field
+- databags can contain string, booleans, number, lists and JSON objects
+
+![alt](./images/opsworks_databags.png)
+
+databag types:
+- aws_opsworks_(app|layer|instance|user)
+
+## Autohealing
+
+- each instance has an agent
+- instance -> heartbeat -> opsworks
+- no heatbeat -> instance is unhealthy -> auto-heal
+- configure event on all instances after auto-heal
+
+EBS backed: online -> stopping -> stopped -> requested -> pending -> booting -> online
+Instance store: terminate -> launch
+  - terminate
+  - launch new instance, same hostname, config, layer membership
+  - reattaches any EBS volumes
+  - new private/public IPs
+  - EIPs reattached
+
+does not:
+- start_failed -> manual fix
+- upgrade OS, even if default is changed
+- check performance, only failures
+
 ### To register RDS instances with a stack
 
 - In the AWS OpsWorks Stacks console, click Layer in the navigation pane, click + Layer or Add a layer to open the Add Layer page, and then click the RDS tab.
