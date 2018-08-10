@@ -32,6 +32,48 @@ App can have multiple env or functional type
 ### worker
 - process output from other envs
 
+## .ebextensions
+
+config folder in bundle, contains %yaml%.conf files. It allows configuration of the EB env and customisation of the resources it contains (EC2, ELB, etc)
+
+### syntax
+- option_settings - global config options
+- resources - additional resources to provision, granular config of those resources
+- packages - additional packages
+- sources
+- files
+- users
+- groups
+- commands
+- container_commands
+- service
+
+### leader instance
+
+- EC2 instance within a LB, Autoscaling, chosen to be the leader/master
+- EEB only has the concept during environment creation
+- once env is established, all nodes are equal
+- `leader_only` directive can be used on within the container_commands section of a .config file within ebextensions
+    - runs only once on a leader
+
+![alt](./images/ebextensinos.png)
+
+![alt](./images/eb-1.png)
+
+## Docker
+
+- app source bundle
+- Dockerfile
+- Dockerrun.aws.json (EB specific file, defines how to deploy an existing docker registry stored container as EB app)
+    - auth info
+    - EC2 < - > container mapping
+    - app logs
+- .dockercfg
+    - contains auth info
+    - stored on S3, bucket must be in the same region as EB env
+    - use docker llogin registry-url to generate config.json or .dockercfg
+
+
 ## Apps
 
 * node
