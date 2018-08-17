@@ -74,6 +74,47 @@ performance monitoring
 
 `GetMetricStatistics` API
 
+## Logs
+
+Log archiving.
+
+ec2 instance -> cloudwatch logs -> check patterns -> alert
+
+free agents:
+- ubuntu
+- amazon linux
+- windows
+
+- log streams
+    `Deleted after 2 months of expiration of the last piece of data in stream`
+- log groups
+    `same retention, monitoring, ACLs`
+- metric filters
+    - doesn't work on existing data
+    - return the first 50 results
+- retention settings
+
+### Real time log processing
+
+- subscription filters
+    - Kinesis streams
+    - Lambda
+    - Kinesis Firehose
+
+## Alarms
+
+-> SNS
+-> Autoscaling
+
+- period should be equal or greater than the metric frequency
+- actions must be in the same region as the alarm
+- no metrics from unattached EBS
+- 5k alarms per AWS account
+- `mon-put-metric-alarm` command
+- `mon-(enable|disable)-alarm`
+- `mon-describe-alarms`
+- you can create an alarm before you've created the metric
+
 ## Retention period
 
 * Data points with a period of less than 60 seconds are available for 3 hours. These data points are high-resolution custom metrics.
@@ -83,5 +124,21 @@ performance monitoring
 
 You can retrieve data from any terminated EC2 or ELB
 
+## Events
+
+- near real-time stream of events
+- route events to lambda, kinesis, SNS streams, other built-in targets
+
+Components:
+- Events
+- Rules
+- Targets, multiple targets allowed
+    - lambda
+    - kinesis streams
+    - SNS topics
+    - built-in
+
 todo:
 - read developer guide
+- https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Subscriptions.html
+- check events FAQ
