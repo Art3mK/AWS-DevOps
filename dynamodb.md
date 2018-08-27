@@ -116,7 +116,7 @@ Partition key && Sort Key (Hash & Range) composed of two attributes
 * be aware of itemCollections
     - only applies to tables with LSIs
     - max size of a item collection is 10Gb
-    - `ItemCollectionSizeLimitExceedException`
+    - `ItemCollectionSizeLimitExceededException`
 * changes are written async to the LSI from main table
 
 #### Global secondary index
@@ -127,6 +127,7 @@ Partition key && Sort Key (Hash & Range) composed of two attributes
 * only eventually consistent reads
 * Keys Only, Include to include attributes, ALL to include all attributes
 * changes are written async to the GSI from main table
+* could affect performance of main table if writes to GSI are throttled
 
 ![alt](./images/DDB-GSI.png)
 
@@ -139,6 +140,16 @@ Used to capture any kind of modification of the DynamoDB table:
 * new item added
 * item updating
 * item removal
+
+### views
+- KEYS_ONLY - only the key attributes are written to the stream
+- NEW_IMAGE - entire item after update is written to the stream
+- OLD_IMAGE - entire item prior to update is written to the stream
+- NEW_AND_OLD_IMAGES - both states are written to the stream
+
+## Replication
+
+![alt](./images/DDB-Replication.png)
 
 ## Query vs Scan
 
@@ -210,3 +221,6 @@ Scalar/DynamoDB data types
 
 # to-do
 - ItemCollections? `ItemCollectionSizeLimitExceedException`
+- replication
+- performance calculations, number of partitions, hot keys vs number of partitions
+- burst capacity
