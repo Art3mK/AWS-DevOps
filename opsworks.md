@@ -82,14 +82,15 @@ Instance types:
 - Configure
   ```
   When: Enters/Leaves online, EIP associate/disassociate, LB attach/detach
-  Runs on all instances (in all layers)
+  Runs on all instances (in all layers) in deployment
   ```
 - Deploy
   ```
-  App deploy to layer instances
+  App deploy to layer instances, invoked by setup event
   ```
 - Undeploy
   ```
+  Delete an app, or undeploy command.
   ```
 - Shutdown
   ```
@@ -168,6 +169,7 @@ databag types:
 ## Autohealing
 
 - each instance has an agent
+- instance can be assigned to multiple layers, if autoheal is disabled in one layer -> instance is not eligible for autohealing
 - instance -> heartbeat -> opsworks
 - no heatbeat -> instance is unhealthy -> auto-heal
 - configure event on all instances after auto-heal
@@ -184,6 +186,17 @@ does not:
 - start_failed -> manual fix
 - upgrade OS, even if default is changed
 - check performance, only failures
+
+after autohealing:
+- opsworks runs "configure" event on entire stack
+
+## CLI commands
+
+- `aws opsworks describe-stacks` (only one API endpoint in us-east-1!)
+- `aws opsworks describe-apps`
+- `aws opsworks create-deployment`
+    - rollback
+      ![alt](./images/opsworks_rollback.png)
 
 ### To register RDS instances with a stack
 

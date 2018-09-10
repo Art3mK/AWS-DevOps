@@ -69,6 +69,10 @@ deployment stage 2 - update instances kept online in stage 1
 4. switch traffic to green
 5. ok or rollback to blue
 
+caveats:
+- low TTL for DNS
+- DB schemas
+
 ![alt](./images/bg-deployment.png)
 
 - advanced orchestration tooling

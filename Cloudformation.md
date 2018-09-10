@@ -307,7 +307,11 @@ Respond payload:
 
 ![alt](./images/CF-custom-resources-result.png)
 
-
+## CLI commands
+- `describe-stacks`
+- `create-stack --template-url|--template-body file://template.json --parameters file://params.josn`
+- `delete-stack`
+- `validate-template`
 
 ## Links
 
