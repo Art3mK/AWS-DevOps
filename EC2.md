@@ -222,6 +222,45 @@ For example, suppose that you create a policy that adds 25 percent and you speci
     IgnoreUnmodifiedGroupSizeProperties - Specifies whether AWS CloudFormation ignores differences in group size properties
     ```
 
+## ASG processes
+
+- Launch
+    ```
+    If you suspend Launch, this disrupts other processes. For example, you can't return an instance in a standby state to service if the Launch process is suspended, because the group can't scale.
+    ```
+- Terminate
+    ```
+    If you suspend Terminate, this disrupts other processes.
+    ```
+- HealthCheck
+    ```
+    Checks the health of the instances. Amazon EC2 Auto Scaling marks an instance as unhealthy if Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is unhealthy. This process can override the health status of an instance that you set manually.
+    ```
+- ReplaceUnhealthy
+    ```
+    Terminates instances that are marked as unhealthy and later creates new instances to replace them. This process works with the HealthCheck process, and uses both the Terminate and Launch processes.
+    ```
+- AZRebalance
+    ```
+    If you suspend AZRebalance and a scale-out or scale-in event occurs, the scaling process still tries to balance the Availability Zones. For example, during scale-out, it launches the instance in the Availability Zone with the fewest instances.
+
+    If you suspend the Launch process, AZRebalance neither launches new instances nor terminates existing instances. This is because AZRebalance terminates instances only after launching the replacement instances.
+
+    If you suspend the Terminate process, your Auto Scaling group can grow up to ten percent larger than its maximum size, because this is allowed temporarily during rebalancing activities. If the scaling process cannot terminate instances, your Auto Scaling group could remain above its maximum size until you resume the Terminate process.
+    ```
+- AlarmNotification
+    ```
+    If you suspend AlarmNotification, Amazon EC2 Auto Scaling does not automatically execute policies that would be triggered by an alarm. If you suspend Launch or Terminate, it will not be able to execute scale-out or scale-in policies, respectively.
+    ```
+- ScheduledActions
+    ```
+    If you suspend Launch or Terminate, scheduled actions that involve launching or terminating instances are affected.
+    ```
+- AddToLoadBalancer
+    ```
+    If you suspend AddToLoadBalancer, Amazon EC2 Auto Scaling launches the instances but does not add them to the load balancer or target group. If you resume the AddToLoadBalancer process, it resumes adding instances to the load balancer or target group when they are launched. However, it does not add the instances that were launched while this process was suspended. You must register those instances manually.
+    ```
+
 # EBS
 
 - EBS are placed in a specific AZ, where they are automatically replicated. (Not to different AZ, but between SANs)
