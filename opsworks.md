@@ -76,13 +76,15 @@ Instance types:
 
 - Setup
   ```
-  Event occurs when an instances has finished booting
-  Like install PHP/Apache
+  Once a new instance has booted, AWS OpsWorks triggers the Setup event, which runs recipes to set up the instance according to the layer configuration.
+  For example, if the instance is part of the PHP App Server layer, the Setup recipes install the Apache and PHP packages.
+  Once setup is complete, AWS OpsWorks triggers a Deploy event, which runs recipes to deploy your application to the new instance.
   ```
 - Configure
   ```
   When: Enters/Leaves online, EIP associate/disassociate, LB attach/detach
   Runs on all instances (in all layers) in deployment
+  The event runs each layer's configure recipes to update the configuration to reflect the current set of online instances
   ```
 - Deploy
   ```
@@ -206,3 +208,7 @@ after autohealing:
 - Select the appropriate instance, set User and Password to the appropriate user and password values and click Register to Stack.
 
 If you change a registered Amazon RDS instance's password, you must manually update the password in AWS OpsWorks Stacks and then redeploy your apps to update the stack configuration and deployment attributes on the stack's instances.
+
+#todo
+
+- opsworks elb layer

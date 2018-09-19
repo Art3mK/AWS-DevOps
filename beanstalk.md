@@ -92,3 +92,6 @@ docker:
 generic:
 * docker
 * multi-container docker
+
+#todo
+- msi

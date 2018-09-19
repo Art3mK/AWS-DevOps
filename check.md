@@ -1,0 +1,2 @@
+- cloudformation reporting to sns
+- instanceboottime metric pausetime cooldown

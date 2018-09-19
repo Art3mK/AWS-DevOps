@@ -1,4 +1,4 @@
-# Elastic Compute Cloud
+# EC2
 
 VM in Cloud.
 
