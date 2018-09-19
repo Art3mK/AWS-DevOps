@@ -113,13 +113,13 @@ After you add lifecycle hooks to your Auto Scaling group, they work as follows:
 
 #### Continue
 
-Launching: success, can be put into service.
-Terminating: both ABANDON and CONTINUE allow instance to terminate, continue allows other lifecycle hooks to complete.
+- Launching: success, can be put into service.
+- Terminating: both ABANDON and CONTINUE allow instance to terminate, continue allows other lifecycle hooks to complete.
 
 #### Abandon
 
-Launching: actions were unsuccessful, instance can be terminated
-Terminating: stops any remaining actions, such as other lifecycle hooks
+- Launching: actions were unsuccessful, instance can be terminated
+- Terminating: stops any remaining actions, such as other lifecycle hooks
 
 ### Spot Instances
 
@@ -159,18 +159,29 @@ Health check grace period doesn't start until you complete the lifecycle hook an
 
 - target tracking scaling - scaling based on a target value for a specific metric.
   ```
-  Configure a target tracking scaling policy to keep the average aggregate CPU utilization of your Auto Scaling group at 50 percent.
+  Configure a target tracking scaling policy to keep the average aggregate CPU utilization
+  of your Auto Scaling group at 50 percent.
   ```
 - step scaling - caling based on a set of scaling adjustments, known as step adjustments, that vary based on the size of the alarm breach
   ```
-  After a scaling activity is started, the policy continues to respond to additional alarms, even while a scaling activity or health check replacement is in progress. Therefore, all alarms that are breached are evaluated by Amazon EC2 Auto Scaling as it receives the alarm messages.
+  After a scaling activity is started, the policy continues to respond to additional
+  alarms, even while a scaling activity or health check replacement is in progress.
+  Therefore, all alarms that are breached are evaluated by Amazon EC2 Auto Scaling
+  as it receives the alarm messages.
 
-  When you create a step scaling policy, you add one or more step adjustments that enable you to scale based on the size of the alarm breach. Each step adjustment specifies a lower bound for the metric value, an upper bound for the metric value, and the amount by which to scale, based on the scaling adjustment type.
+  When you create a step scaling policy, you add one or more step adjustments that
+  enable you to scale based on the size of the alarm breach. Each step adjustment
+  specifies a lower bound for the metric value, an upper bound for the metric
+  value, and the amount by which to scale, based on the scaling adjustment type.
   ```
 - simple scaling - scaling based on a single scaling adjustment
   ```
-  We recommend that you use step scaling policies instead of simple scaling policies even if you have a single step adjustment, because we continuously evaluate alarms and do not lock the group during scaling activities or health check replacements
-  After a scaling activity is started, the policy must wait for the scaling activity or health check replacement to complete and the cooldown period to expire before it can respond to additional alarms.
+  We recommend that you use step scaling policies instead of simple scaling policies
+  even if you have a single step adjustment, because we continuously evaluate alarms
+  and do not lock the group during scaling activities or health check replacements
+  After a scaling activity is started, the policy must wait for the scaling activity
+  or health check replacement to complete and the cooldown period to expire before
+  it can respond to additional alarms.
   ```
 
 ### Scaling Adjustment Types
@@ -199,7 +210,7 @@ Increment or decrement the current capacity of the group by the specified percen
 
 Example: If the current capacity is 10 instances and the adjustment is 10 percent, then when this policy is performed, 1 instance is added to the group for a total of 11 instances.
 
-With **PercentChangeInCapacity**, you can also specify the minimum number of instances to scale (using the *MinAdjustmentMagnitude* parameter or *Add instances in increments of at least* in the console).
+With **PercentChangeInCapacity**, you can also specify the minimum number of instances to scale (using the **MinAdjustmentMagnitude** parameter or **Add instances in increments of at least** in the console).
 
 For example, suppose that you create a policy that adds 25 percent and you specify a minimum increment of 2 instances. If you have an Auto Scaling group with 4 instances and the scaling policy is executed, 25 percent of 4 is 1 instance. However, because you specified a minimum increment of 2, there are 2 instances added.
 
@@ -209,24 +220,36 @@ For example, suppose that you create a policy that adds 25 percent and you speci
 
 - AutoScalingReplacingUpdate
     ```
-    This policy enables you to specify whether AWS CloudFormation replaces an Auto Scaling group with a new one or replaces only the instances in the Auto Scaling group.
+    This policy enables you to specify whether AWS CloudFormation replaces an Auto Scaling group
+     with a new one or replaces only the instances in the Auto Scaling group.
     ```
 - AutoScalingRollingUpdate
     ```
-    Rolling updates enable you to specify whether AWS CloudFormation updates instances that are in an Auto Scaling group in batches or all at once.
-    PauseTime - The amount of time that AWS CloudFormation pauses after making a change to a batch of instances to give those instances time to start software applications. If you enable the WaitOnResourceSignals property, PauseTime is the amount of time that AWS CloudFormation should wait for the Auto Scaling group to receive the required number of valid signals from added or replaced instances.
+    Rolling updates enable you to specify whether AWS CloudFormation updates instances that
+    are in an Auto Scaling group in batches or all at once.
+    PauseTime - The amount of time that AWS CloudFormation pauses after making a change to a
+    batch of instances to give those instances time to start software applications. If you
+    enable the WaitOnResourceSignals property, PauseTime is the amount of time that AWS
+    CloudFormation should wait for the Auto Scaling group to receive the required number of
+    valid signals from added or replaced instances.
     ```
 - AutoScalingScheduledAction
     ```
-    With scheduled actions, the group size properties of an Auto Scaling group can change at any time. When you update a stack with an Auto Scaling group and scheduled action, AWS CloudFormation always sets the group size property values of your Auto Scaling group to the values that are defined in the AWS::AutoScaling::AutoScalingGroup resource of your template, even if a scheduled action is in effect.
-    IgnoreUnmodifiedGroupSizeProperties - Specifies whether AWS CloudFormation ignores differences in group size properties
+    With scheduled actions, the group size properties of an Auto Scaling group can change at
+    any time. When you update a stack with an Auto Scaling group and scheduled action,
+    AWS CloudFormation always sets the group size property values of your Auto Scaling group
+    to the values that are defined in the AWS::AutoScaling::AutoScalingGroup resource of your
+    template, even if a scheduled action is in effect.
+    IgnoreUnmodifiedGroupSizeProperties - Specifies whether AWS CloudFormation ignores
+    differences in group size properties
     ```
 
 ## ASG processes
 
 - Launch
     ```
-    If you suspend Launch, this disrupts other processes. For example, you can't return an instance in a standby state to service if the Launch process is suspended, because the group can't scale.
+    If you suspend Launch, this disrupts other processes. For example, you can't return an instance
+    in a standby state to service if the Launch process is suspended, because the group can't scale.
     ```
 - Terminate
     ```
@@ -234,31 +257,49 @@ For example, suppose that you create a policy that adds 25 percent and you speci
     ```
 - HealthCheck
     ```
-    Checks the health of the instances. Amazon EC2 Auto Scaling marks an instance as unhealthy if Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is unhealthy. This process can override the health status of an instance that you set manually.
+    Checks the health of the instances. Amazon EC2 Auto Scaling marks an instance as unhealthy if
+    Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is
+    unhealthy. This process can override the health status of an instance that you set manually.
     ```
 - ReplaceUnhealthy
     ```
-    Terminates instances that are marked as unhealthy and later creates new instances to replace them. This process works with the HealthCheck process, and uses both the Terminate and Launch processes.
+    Terminates instances that are marked as unhealthy and later creates new instances to
+    replace them. This process works with the HealthCheck process, and uses both the
+    Terminate and Launch processes.
     ```
 - AZRebalance
     ```
-    If you suspend AZRebalance and a scale-out or scale-in event occurs, the scaling process still tries to balance the Availability Zones. For example, during scale-out, it launches the instance in the Availability Zone with the fewest instances.
+    If you suspend AZRebalance and a scale-out or scale-in event occurs, the scaling process
+    still tries to balance the Availability Zones. For example, during scale-out, it launches
+    the instance in the Availability Zone with the fewest instances.
 
-    If you suspend the Launch process, AZRebalance neither launches new instances nor terminates existing instances. This is because AZRebalance terminates instances only after launching the replacement instances.
+    If you suspend the Launch process, AZRebalance neither launches new instances nor
+    terminates existing instances. This is because AZRebalance terminates instances only
+    after launching the replacement instances.
 
-    If you suspend the Terminate process, your Auto Scaling group can grow up to ten percent larger than its maximum size, because this is allowed temporarily during rebalancing activities. If the scaling process cannot terminate instances, your Auto Scaling group could remain above its maximum size until you resume the Terminate process.
+    If you suspend the Terminate process, your Auto Scaling group can grow up to ten percent
+    larger than its maximum size, because this is allowed temporarily during rebalancing
+    activities. If the scaling process cannot terminate instances, your Auto Scaling group
+    could remain above its maximum size until you resume the Terminate process.
     ```
 - AlarmNotification
     ```
-    If you suspend AlarmNotification, Amazon EC2 Auto Scaling does not automatically execute policies that would be triggered by an alarm. If you suspend Launch or Terminate, it will not be able to execute scale-out or scale-in policies, respectively.
+    If you suspend AlarmNotification, Amazon EC2 Auto Scaling does not automatically execute
+    policies that would be triggered by an alarm. If you suspend Launch or Terminate, it
+    will not be able to execute scale-out or scale-in policies, respectively.
     ```
 - ScheduledActions
     ```
-    If you suspend Launch or Terminate, scheduled actions that involve launching or terminating instances are affected.
+    If you suspend Launch or Terminate, scheduled actions that involve launching or
+    terminating instances are affected.
     ```
 - AddToLoadBalancer
     ```
-    If you suspend AddToLoadBalancer, Amazon EC2 Auto Scaling launches the instances but does not add them to the load balancer or target group. If you resume the AddToLoadBalancer process, it resumes adding instances to the load balancer or target group when they are launched. However, it does not add the instances that were launched while this process was suspended. You must register those instances manually.
+    If you suspend AddToLoadBalancer, Amazon EC2 Auto Scaling launches the instances but does
+    not add them to the load balancer or target group. If you resume the AddToLoadBalancer
+    process, it resumes adding instances to the load balancer or target group when they are
+    launched. However, it does not add the instances that were launched while this process
+    was suspended. You must register those instances manually.
     ```
 
 # EBS
