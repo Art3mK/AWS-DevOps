@@ -137,8 +137,3 @@ Components:
     - kinesis streams
     - SNS topics
     - built-in
-
-todo:
-- read developer guide
-- https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Subscriptions.html
-- check events FAQ

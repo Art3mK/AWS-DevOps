@@ -200,6 +200,18 @@ after autohealing:
     - rollback
       ![alt](./images/opsworks_rollback.png)
 
+## Load balancing
+
+After you attach a load balancer to a layer, AWS OpsWorks Stacks does the following:
+- Deregisters any currently registered instances.
+- Automatically registers the layer's instance's when they come online and deregisters instances when they leave the online state, including load-based and time-based instances.
+- Automatically activates and deactivates the instances' Availability Zones.
+
+To use Elastic Load Balancing with a stack, you must first create one or more load balancers in the same region by using the Elastic Load Balancing console, CLI, or API. You should be aware of the following:
+- You can attach only one load balancer to a layer.
+- Each load balancer can handle only one layer.
+- AWS OpsWorks Stacks does not support Application Load Balancer. You can only use Classic Load Balancer with AWS OpsWorks Stacks.
+
 ### To register RDS instances with a stack
 
 - In the AWS OpsWorks Stacks console, click Layer in the navigation pane, click + Layer or Add a layer to open the Add Layer page, and then click the RDS tab.
@@ -208,7 +220,3 @@ after autohealing:
 - Select the appropriate instance, set User and Password to the appropriate user and password values and click Register to Stack.
 
 If you change a registered Amazon RDS instance's password, you must manually update the password in AWS OpsWorks Stacks and then redeploy your apps to update the stack configuration and deployment attributes on the stack's instances.
-
-#todo
-
-- opsworks elb layer

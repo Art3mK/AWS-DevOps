@@ -16,6 +16,3 @@ Streams, Analytics, Firehose
 ## Firehose
 
 - load streaming data into AWS S3/Redshift
-
-#to-do
-- check kinesis in sol arch

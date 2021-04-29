@@ -91,7 +91,3 @@ Users from three sources:
 * Develop an Identity Broker to communicate with LDAP and STS
 * Identity broker -> LDAP -> IAM role for user
 * Credentials -> App auth to STS -> Assume role -> Access to resources
-
-# TODO
-
-- configure external idP

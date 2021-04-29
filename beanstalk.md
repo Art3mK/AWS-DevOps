@@ -39,19 +39,33 @@ config folder in bundle, contains %yaml%.conf files. It allows configuration of 
 ### syntax
 - option_settings - global config options
 - resources - additional resources to provision, granular config of those resources
-- packages - additional packages
-- sources
-- files
+- *packages - additional packages
+    ```
+    packages:
+      msi:
+        mysql: https://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-8.0.11.msi
+    ```
+- *sources
+- *files
 - users
 - groups
-- commands
-- container_commands
-- service
+- *commands
+- *services
+    ```
+    services:
+      windows:
+        myservice:
+          enabled: true
+          ensureRunning: true
+    ```
+- *container_commands
+
+* - only these are supported on windows
 
 ### leader instance
 
 - EC2 instance within a LB, Autoscaling, chosen to be the leader/master
-- EEB only has the concept during environment creation
+- EB only has the concept during environment creation
 - once env is established, all nodes are equal
 - `leader_only` directive can be used on within the container_commands section of a .config file within ebextensions
     - runs only once on a leader
@@ -71,8 +85,7 @@ config folder in bundle, contains %yaml%.conf files. It allows configuration of 
 - .dockercfg
     - contains auth info
     - stored on S3, bucket must be in the same region as EB env
-    - use docker llogin registry-url to generate config.json or .dockercfg
-
+    - use docker login registry-url to generate config.json or .dockercfg
 
 ## Apps
 
@@ -92,6 +105,3 @@ docker:
 generic:
 * docker
 * multi-container docker
-
-#todo
-- msi

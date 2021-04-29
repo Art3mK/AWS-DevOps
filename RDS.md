@@ -87,6 +87,3 @@ send events to recipients for RDS events via SNS
 - ReplicaLag (seconds)
 - Read|WriteIOPS
 - Read|WriteLatency
-
-to-do:
-- sharding?
